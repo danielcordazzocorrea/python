@@ -1,3 +1,4 @@
+#Você coloca quantos números primos você quer ver e ele mostra dentro de uma lista
 cont = 0
 lista = []
 conta = 0
