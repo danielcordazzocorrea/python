@@ -1,7 +1,7 @@
 import sqlite3
 import pygame
 import requests
-banco = sqlite3.connect('Finanças.db')
+banco = sqlite3.connect(r"C:\Users\Pr. Genival\Downloads\python\Banco\dados\Finanças.db")
 cursor = banco.cursor()
 pygame.init()
 screen = pygame.display.set_mode((1000, 500))
@@ -21,16 +21,16 @@ print(lista)
 
 usuario = ''
 
-conta = pygame.image.load('Botao conta.gif')
-voltar = pygame.image.load('seta.gif')
-iniciar = pygame.image.load('botao_entrar.gif')
-nego = pygame.image.load('fundo negociação.gif')
-sair = pygame.image.load('botao sair.gif')
-investir = pygame.image.load('investir.gif')
-transacao_concluida = pygame.image.load('transação concluida.gif')
-bitcoin_imagem = pygame.image.load('bitcoin.png')
-dolar_imagem = pygame.image.load('dolar.png')
-real_imagem = pygame.image.load('real.gif')
+conta = pygame.image.load(r"Banco\imagens\Botao conta.gif")
+voltar = pygame.image.load(r"Banco\imagens\seta.gif")
+iniciar = pygame.image.load(r"Banco\imagens\botao_entrar.gif")
+nego = pygame.image.load(r"Banco\imagens\fundo negociação.gif")
+sair = pygame.image.load(r"Banco\imagens\botao sair.gif")
+investir = pygame.image.load(r"Banco\imagens\investir.gif")
+transacao_concluida = pygame.image.load(r"Banco\imagens\transação concluida.gif")
+bitcoin_imagem = pygame.image.load(r"Banco\imagens\bitcoin.png")
+dolar_imagem = pygame.image.load(r"Banco\imagens\dolar.png")
+real_imagem = pygame.image.load(r"Banco\imagens\real.gif")
 # imagem
 
 criar_1 = pygame.Rect(300, 150, 400, 75)
@@ -42,6 +42,7 @@ x_transacao = pygame.Rect(600, 100, 50, 50)
 # retangulos
 
 cor = (0, 0, 255)
+cores = 0
 # cores
 print(dinheiro)
 botao_conta = screen.blit(conta, (350, 300))
@@ -79,10 +80,11 @@ pagar = font.render('Pagar', False, (0, 0, 0))
 investir_cifrao = fonte.render('$', False, (0, 0, 0))
 transacao_c = fon.render('Transação Concluída', False, (255, 255, 255))
 escolha = font.render('Você quer converter seu dinheiro em:', False, (0, 0, 0))
+
 # texto
 cont = 0
 tela = True
-criar = entrar = escrever = escrever2 = conta_entrar = negociacao = escrever_pagar = escrever_pagar2 = transacao = conversao = False
+criar = entrar = escrever = escrever2 = conta_entrar = negociacao = escrever_pagar = escrever_pagar2 = transacao = conversao = ja_tem = False
 deixar = ''
 # Variáveis
 
@@ -144,7 +146,8 @@ while tela:
                                 deixar += 'N'
                         print(deixar)
                         if 'S' in deixar:
-                            print('ja tem')
+                            ja_tem = True
+                            print('Já tem')
                         else:
                             if len(escrita_retangulo_2) > 5 and len(escrita_retangulo_1) > 5:
                                 cursor.execute(f'INSERT INTO dados VALUES ("{escrita_retangulo_1}", "{escrita_retangulo_2}", 0, "{moeda}")')
@@ -362,6 +365,13 @@ while tela:
         pygame.draw.rect(screen, cor, x_transacao)
         screen.blit(transacao_concluida, (360, 100))
         screen.blit(transacao_c, (380, 220))
+    if ja_tem is True:
+        cores += 3
+        jatem = font.render('Esse nome já existe, coloque outro!', False, (255, cores, cores))
+        screen.blit(jatem, (0, 400))
+        if cores == 255:
+            ja_tem = False
+            cores = 0
     cont = 0
     pygame.display.flip()
 pygame.quit()
