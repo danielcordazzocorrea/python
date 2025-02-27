@@ -84,7 +84,7 @@ escolha = font.render('Você quer converter seu dinheiro em:', False, (0, 0, 0))
 # texto
 cont = 0
 tela = True
-criar = entrar = escrever = escrever2 = conta_entrar = negociacao = escrever_pagar = escrever_pagar2 = transacao = conversao = ja_tem = nome_pequeno = conta_criada = False
+criar = entrar = escrever = escrever2 = conta_entrar = negociacao = escrever_pagar = escrever_pagar2 = transacao = conversao = ja_tem = nome_pequeno = conta_criada = entrada_recusada = False
 deixar = ''
 # Variáveis
 
@@ -105,6 +105,7 @@ cotacao_real = 1/cotacao_dolar
 jaexiste = 'Esse nome já existe, tente outro!'
 nomepequeno = 'Esse nome ou senha é muito pequeno!'
 contacriada = 'Contra criada com sucesso!'
+entradarecusada = 'Dados incorretos'
 #mensagens na função
 
 def exibir_mensagem(cores, ordem, mensagem, tom):
@@ -192,6 +193,10 @@ while tela:
                                 moeda = lista[cont - 1][3]
                                 usuario = escrita_retangulo_1
                                 conta_entrar = True
+                                entrada_recusada = False
+                            else:
+                                if conta_entrar is False:
+                                    entrada_recusada = True
             if botao_pagar.collidepoint(event.pos) and conta_entrar is True:
                 negociacao = True
             if b_seta.collidepoint(event.pos) and conta_entrar is True and negociacao is False:
@@ -393,6 +398,8 @@ while tela:
         cores, nome_pequeno = exibir_mensagem(cores, nome_pequeno, nomepequeno, 'vermelho')
     if conta_criada is True:
         cores, conta_criada = exibir_mensagem(cores, conta_criada, contacriada, 'verde')
+    if entrada_recusada is True:
+        cores, entrada_recusada = exibir_mensagem(cores, entrada_recusada, entradarecusada, 'vermelho')
     cont = 0
     pygame.display.flip()
 pygame.quit()
