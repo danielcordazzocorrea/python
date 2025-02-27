@@ -84,23 +84,41 @@ escolha = font.render('Você quer converter seu dinheiro em:', False, (0, 0, 0))
 # texto
 cont = 0
 tela = True
-criar = entrar = escrever = escrever2 = conta_entrar = negociacao = escrever_pagar = escrever_pagar2 = transacao = conversao = ja_tem = False
+criar = entrar = escrever = escrever2 = conta_entrar = negociacao = escrever_pagar = escrever_pagar2 = transacao = conversao = ja_tem = nome_pequeno = False
 deixar = ''
 # Variáveis
 
 escrita_retangulo_1 = escrita_retangulo_2 = escrita_pagar = escrita_pagar2 = ''
 # escrita
+
 url_bitcoin = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
 response_bitcoin = requests.get(url_bitcoin)
 data_bitcoin = response_bitcoin.json()
 cotacao_bitcoin = data_bitcoin["bitcoin"]["usd"]
-
 url_usd = "https://economia.awesomeapi.com.br/json/last/USD-BRL"
 response_usd = requests.get(url_usd)
 data_usd = response_usd.json()
-
 cotacao_dolar = float(data_usd["USDBRL"]["bid"])
 cotacao_real = 1/cotacao_dolar
+#cotações
+
+jaexiste = 'Esse nome já existe, tente outro!'
+nomepequeno = 'Esse nome ou senha é muito pequeno!'
+#mensagens na função
+
+def exibir_mensagem(cores, ordem, mensagem, tom):
+    cores += 5
+    if tom == 'vermelho':
+        mostrar = font.render(mensagem, False, (255, cores, cores))
+    else:
+        mostrar = font.render(mensagem, False, (255, cores, cores))
+    screen.blit(mostrar, (0, 400))
+    if cores == 255:
+        cores = 0
+        ordem = False
+    return cores, ordem
+#funções
+
 while tela:
     pygame.time.delay(50)
     screen.fill((255, 255, 255))
@@ -156,6 +174,8 @@ while tela:
                                 print(lista)
                                 banco.commit()
                                 criar = False
+                            else:
+                                nome_pequeno = True
                     if entrar:
 
                         for b in lista:
@@ -366,12 +386,9 @@ while tela:
         screen.blit(transacao_concluida, (360, 100))
         screen.blit(transacao_c, (380, 220))
     if ja_tem is True:
-        cores += 3
-        jatem = font.render('Esse nome já existe, coloque outro!', False, (255, cores, cores))
-        screen.blit(jatem, (0, 400))
-        if cores == 255:
-            ja_tem = False
-            cores = 0
+        cores, ja_tem = exibir_mensagem(cores, ja_tem, jaexiste, 'vermelho')
+    if nome_pequeno is True:
+        cores, nome_pequeno = exibir_mensagem(cores, nome_pequeno, nomepequeno, 'vermelho')
     cont = 0
     pygame.display.flip()
 pygame.quit()
