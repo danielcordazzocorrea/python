@@ -14,6 +14,13 @@
     <div class="tela" id="login">
         <header>
             <h1>Criar Conta</h1>
+            {% with messages = get_flashed_messages()%}
+            {% if messages %}
+            {% for message in messages}
+            <div>{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
         </header>
         <main>
             <form action="/dados" method="post">
