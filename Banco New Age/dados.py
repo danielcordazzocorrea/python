@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Criar a tabela se não existir
 def init_db():
-    banco = sqlite3.connect(r"C:\Users\Pr. Genival\Downloads\python\Banco New Age\dados\contas.db")
+    banco = sqlite3.connect("contas.db")
     cursor = banco.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS dados (
@@ -25,7 +25,7 @@ def receber_dados():
     senha = request.form.get("senha")
 
     if nome and senha:
-        banco = sqlite3.connect("dados/contas.db")
+        banco = sqlite3.connect("contas.db")
         cursor = banco.cursor()
 
         print(f"Nome: {nome}, Senha: {senha}") 
@@ -36,7 +36,7 @@ def receber_dados():
 
         banco.commit()
         banco.close()
-        return redirect()  # Verifique se esse arquivo está na pasta correta
+        return redirect(r"C:\Users\Pr. Genival\Downloads\python\Banco New Age\Banco.html")  # Verifique se esse arquivo está na pasta correta
 
     return "Erro ao cadastrar usuário!", 400
 
